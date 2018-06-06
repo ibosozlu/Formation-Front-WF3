@@ -10,10 +10,8 @@ var boutton = document.getElementById("submit").disabled = false;
 function test(){
 msg[0].style.display = "none";
 document.getElementById("submit").disabled = false;
-titre.textContent = "";
+
 for( let i = 0 ; i < membres.length ; i++ ){ 
-    console.log(pseudo.value);
-    console.log(membres[i].pseudo);
    
     if( pseudo.value == membres[i].pseudo){
         msg[0].style.display = "block";
@@ -21,13 +19,13 @@ for( let i = 0 ; i < membres.length ; i++ ){
         break;
     }
    else if( i == membres.length-1){
-    titre.textContent = "Bonjour" + " " + pseudo.value;
+        ititre.textContent = "Bonjour" + " " + pseudo.value;
     
    }
 }
 }
 
-pseudo.addEventListener('change', test);
+pseudo.addEventListener('input', test);
 
 
 
@@ -71,3 +69,5 @@ var titre = document.getElementById('Bienvenue');
 
 
 /* -------------------------------------  ETAPE 4 --------------------------------------*/
+
+
