@@ -70,14 +70,14 @@
 
     <main>
         <input type="text" placeholder="Saisissez un terme à surligner..." id="markJS">
-        <!--<section>
-            <header>
+        <!-- <section> -->
+            <!-- <header>
                 <h1>TITRE</h1>
             </header>
             <article>
                 MON CONTENU
-            </article>
-        </section>-->
+            </article> -->
+        <!-- </section> -->
     </main>
    
     <!-- Intégration de jQuery -->
@@ -95,13 +95,33 @@
         $(function() {
 
             $.ajax('https://jsonplaceholder.typicode.com/posts')
-            .done(function(data) {
-                let i = 0;
-                while (i < 10){
-                consolew².log(data[i]); 
-                i++;
+            .done(function(articles) {
+                $.each(articles,function( index ,article){
+                    $( `
+                        <section>
+                            <header>
+                                <h1>${article.title}</h1>
+                            </header>
+                            <article>
+                                ${article.body}
+                            </article>
+                        </section>
+                    `).appendTo($('main'));
+                
+                    if (index === 5){
+                    return false;
                 }
+                });
+                
+                // let i = 0;
+                // while (i < 10){
+                // console.log(data[i]); 
+                // $('main').append('<section><header><h1>Titre :'+ data[i].title + '</header><br><article>'+ 'User ID :'  + data[i].userId +' ID :' + data[i].id + '<br>' + data[i].body +'</article><br></section>' )
+                
+                // i++;
+                // }
             });
+
 
 
 
@@ -121,6 +141,40 @@
             
 
         }); // end jQuery
+
+
+
+// $('#markJS').change(function(event) {
+
+//     event.preventDefault();
+//     let name    = $('#markJS').val();
+//     $(".body").mark(keyword [name, mark]);
+//     console.log(name);
+
+// }); 
+$(function() {
+
+var mark = function() {
+
+  // Read the keyword
+  var keyword = $("input[id='markJS']").val();
+
+  // Remove previous marked elements and mark
+  // the new keyword inside the context
+  $("body").unmark({
+    done: function() {
+      $("body").mark(keyword);
+    }
+  });
+};
+
+$("input[id='markJS']").on("input", mark);
+
+
+});
+
+
+
 
     </script>
 
