@@ -3,22 +3,9 @@
  * notre application, on importe "Component"
  * via @angular/core.
  */
-import {Component} from '@angular/core';
-
-class Contact {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address?: object;
-  phone?: number;
-  website?: string;
-  company?: object;
-}
-
-
-
-
+import {Component, OnInit} from '@angular/core';
+import {Contact} from './Shared/models/contact';
+import {UserApiService} from './Shared/services/user/user-api.service';
 
 /**
  * @Component est ce qu'on appelle un décorateur.
@@ -64,23 +51,23 @@ class Contact {
  * Dans notre contexte MVVM, notre classe
  * correspond au ViewModel.
  */
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   // -- Déclaration d'une variable titre
   title = 'Contact App';
 
   // -- Contact choisi par mon utilisateur
-  contactActif : Contact;
+  contactActif: Contact;
 
   // -- Déclaration d'un Objet Contact
-  unContact : Contact = {
+  unContact: Contact = {
     id: 1,
     name: 'Hugo LIEGEARD',
     username: 'hugoliegeard',
     email: 'wf3@hl-media.fr'
   };
   // -- Tableau de Contacts
-  mesContacts : Contact[] = [
+  mesContacts: Contact[] = [
     {
       id: 1,
       name : 'Ibo SOZLU',
@@ -112,4 +99,23 @@ export class AppComponent {
     this.contactActif = contactCliquerParMonUtilisateur;
     console.log(this.contactActif);
   }
+
+  ajouterContactDansListe(event: any) {
+    console.log(event);
+    const leContact: Contact = event.leContact;
+    this.mesContacts.push(leContact);
+  }
+  constructor(private userApiService: UserApiService)  {
+
+  }
+  ngOnInit(): void {
+    this.userApiService.getUsers().subscribe(
+      contacts => {
+        console.log(contacts);
+        this.mesContacts = contacts;
+    }
+    )
+  }
+
+
 }
